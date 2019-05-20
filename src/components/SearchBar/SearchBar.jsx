@@ -1,21 +1,30 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
 class SearchBar extends Component {
+
   state = {term: ''};
+
   onInputChange(event) {
+
     console.log("event", event.target.value);
   }
-  onInputClick() {
+  onInputClick = () => {
     console.log("Input was clicked");
+  }
+  onFormSubmit = (event) => {
+    this.props.onSubmit(this.state.children);
+    console.log('state', this.props.onSubmit)
+    event.preventDefault();
+    console.log('hello', event)
   }
   render() {
     return (
       <div>
-        <form>
+        <form onSubmit={this.onFormSubmit}>
           <div className="field">
             <div className="control">
               <input value={this.state.term}
-                onChange={(event)=> this.setState({term: event.target.value.toUpperCase()})}
+                onChange={(event)=> this.setState({term: event.target.value})}
                 className="input is-large"
                 type="text"
                 placeholder="Search by a town"
