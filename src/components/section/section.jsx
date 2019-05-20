@@ -1,33 +1,24 @@
 import React, { Component } from "react";
-import Header from "../header/Header";
+import Header from "../Header/Header";
 import Hero from "../Hero/Hero";
 import Card from "../Card/Card";
 import CardInfo from "../CardInfo/CardInfo";
 import SearchLocation from "../SearchLocation/SearchLocation";
+import SearchBar from "../SearchBar/SearchBar";
 
 class Section extends Component {
   //React - have to define render - otherwise react will throw a error
   render() {
     return (
-      <section>
+      <section className="hero background-home is-link is-fullheight-with-navbar">
         <div className="container">
           <Header />
           <section>
             <Hero />
-            <SearchLocation> {this.props.location}</SearchLocation>
+            <div className="container">
+              <SearchBar />
+            </div>
           </section>
-          <Card>
-            <CardInfo
-              editor="Sam Smith"
-              timeSent="Today at 4:10pm"
-              name="Heidi Kloom"
-            />
-            <CardInfo
-              editor="Jane Jeans"
-              timeSent="Today at 4:00pm"
-              name="Henry Heels"
-            />
-          </Card>
         </div>
       </section>
     );
