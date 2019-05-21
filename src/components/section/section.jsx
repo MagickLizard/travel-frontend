@@ -16,7 +16,6 @@ class Section extends Component {
           <section>
             <Hero />
             <div className="container">
-              <SearchBar> {this.state}</SearchBar>
             </div>
           </section>
         </div>
