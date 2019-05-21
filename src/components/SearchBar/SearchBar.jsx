@@ -32,6 +32,7 @@ class SearchBar extends Component {
                 type="text"
                 placeholder="Search by a town"
               />
+              <div className="container"> 
               <button
                 className="button is-success is-medium"
                 onChange={event => console.log("input was clicked", event)}
@@ -39,6 +40,7 @@ class SearchBar extends Component {
                 Search!
               </button>
               {/* <button className="container" onChange={this.onSearchLocation}> </button> */}
+              </div>
             </div>
           </div>
         </form>

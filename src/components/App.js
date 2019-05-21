@@ -10,12 +10,11 @@ import SearchLocation from "./SearchLocation/SearchLocation";
 import SearchBar from "./SearchBar/SearchBar";
 import unirest from "unirest";
 import unsplash from "../api/unsplash";
-import ImageList from './ImageList/ImageList';
+import ImageList from "./ImageList/ImageList";
 
 class App extends React.Component {
   state = { lat: null, images: [], city: [] };
-  componentDidMount() {
-  }
+  componentDidMount() {}
   searchByCity = async term => {
     console.log("term", term);
     unirest
@@ -28,9 +27,9 @@ class App extends React.Component {
         "951dd8fe7bmsh901d416187df458p18dbc5jsncd62ce4a5f58"
       )
       .then(response => {
-        this.setState({ city: response })
-  });
-}
+        this.setState({ city: response });
+      });
+  };
   componentDidUpdate() {
     return <section location={this.state.lat}> Latitude:</section>;
   }
@@ -41,7 +40,7 @@ class App extends React.Component {
       .get(searchPath, {
         params: {
           query: term
-        },
+        }
       })
       .then(response => {
         this.setState({ images: response.data.results });
@@ -58,15 +57,11 @@ class App extends React.Component {
             <section>
               <Hero />
               <div className="container">
-                <SearchBar onSubmit={this.onSearchSubmit}>
-                </SearchBar>
+                <SearchBar onSubmit={this.onSearchSubmit} />
+                <div className="container"> Images Found: {this.state.images.length}</div>
                 <ImageList images={this.state.images}> </ImageList>
-                <div className="container" onChange={this.searchByCity}>
-                </div>
-                      <div className="container">
-                    Testing: {this.state.city}
-                  </div>
-                Found {this.state.images.length} images
+                <div className="container" onChange={this.searchByCity} />
+                <div className="container"> {this.state.city}</div>
               </div>
             </section>
           </div>
