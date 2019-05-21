@@ -10,6 +10,7 @@ import SearchLocation from "./SearchLocation/SearchLocation";
 import SearchBar from "./SearchBar/SearchBar";
 import unirest from "unirest";
 import unsplash from "../api/unsplash";
+import ImageList from './ImageList/ImageList';
 
 class App extends React.Component {
   state = { lat: null, images: [], city: [] };
@@ -58,8 +59,8 @@ class App extends React.Component {
               <Hero />
               <div className="container">
                 <SearchBar onSubmit={this.onSearchSubmit}>
-      
                 </SearchBar>
+                <ImageList images={this.state.images}> </ImageList>
                 <div className="container" onChange={this.searchByCity}>
                 </div>
                       <div className="container">
