@@ -10,14 +10,14 @@ class SearchBar extends Component {
     console.log("Input was clicked");
   };
   onFormSubmit = event => {
-    console.log('form submit props', this.props.children)
+    console.log('form submit props', this.props)
     this.props.onSubmit(this.state.term); //this.props.onSubmit is the function in app onSubmit() and the state is the value in the input field below.
     event.preventDefault();
   };
   onSearchLocation = event => {
-    console.log('event', event)
-    console.log('props', this.props.children)
-    this.props.onChange(this.state.city);
+    console.log('event',event)
+    console.log('props>>>', this.props)
+    this.props.onChange(this.state.term);
   };
   render() {
     return (
@@ -38,7 +38,7 @@ class SearchBar extends Component {
               >
                 Search!
               </button>
-              <div className="container" value={this.state.city} onChange={this.onSearchLocation}> </div>
+              {/* <button className="container" onChange={this.onSearchLocation}> </button> */}
             </div>
           </div>
         </form>

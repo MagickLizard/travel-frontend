@@ -9,7 +9,7 @@ import CardInfo from "./CardInfo/CardInfo";
 import SearchLocation from "./SearchLocation/SearchLocation";
 import SearchBar from "./SearchBar/SearchBar";
 import unirest from "unirest";
-import axios from "axios";
+import unsplash from "../api/unsplash";
 
 class App extends React.Component {
   state = { lat: null, images: [], city: [] };
@@ -28,13 +28,6 @@ class App extends React.Component {
       )
       .then(response => {
         this.setState({ city: response })
-      // }
-      // .end(function(result) {
-      //   console.log("testing>>", result.status, result.headers, result.body);
-      //   // for (let i of result.body) {
-      //     this.setState({ city: result });
-      //   // }
-      // });
   });
 }
   componentDidUpdate() {
@@ -42,25 +35,17 @@ class App extends React.Component {
   }
 
   onSearchSubmit = async term => {
-    let path = "search/photos";
-    let rootUrl = "https://api.unsplash.com/" + path;
-
-    axios
-      .get(rootUrl, {
+    let searchPath = "search/photos";
+    unsplash
+      .get(searchPath, {
         params: {
           query: term
         },
-        headers: {
-          Authorization:
-            "Client-ID 2e9ed63a98511c8e7500b2c474673945b9d2128d225ee74e52741744df67af13"
-        }
       })
       .then(response => {
         this.setState({ images: response.data.results });
         console.log("then>", response.data.results);
       });
-
-    console.log("onSearchSubmit", term);
   };
   render() {
     return (
@@ -73,14 +58,14 @@ class App extends React.Component {
               <Hero />
               <div className="container">
                 <SearchBar onSubmit={this.onSearchSubmit}>
-                  <div className="container">
-                    Found {this.state.images.length} images
-                  </div>
-                  <div className="container" onChange={this.searchByCity}>
+      
+                </SearchBar>
+                <div className="container" onChange={this.searchByCity}>
+                </div>
+                      <div className="container">
                     Testing: {this.state.city}
                   </div>
-                </SearchBar>
-          
+                Found {this.state.images.length} images
               </div>
             </section>
           </div>
