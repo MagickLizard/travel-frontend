@@ -12,10 +12,8 @@ class SearchBar extends Component {
     console.log("Input was clicked");
   }
   onFormSubmit = (event) => {
-    this.props.onSubmit(this.state.children);
-    console.log('state', this.props.onSubmit)
+    this.props.onSubmit(this.state.term); //this.props.onSubmit is the function in app and the state is the value in the input field below.
     event.preventDefault();
-    console.log('hello', event)
   }
   render() {
     return (
