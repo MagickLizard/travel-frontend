@@ -7,7 +7,7 @@ const ImageList = props => {
   });
   return (
     <div className="container">
-      <div className="wrapper">
+      <div className="image-list wrapper">
         {images}
         </div>
     </div>
