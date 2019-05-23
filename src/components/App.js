@@ -4,31 +4,29 @@ import "./App.css";
 import Spinner from "./Spinner/Spinner";
 import Header from "./Header/Header";
 import Hero from "./Hero/Hero";
-import Card from "./Card/Card";
-import CardInfo from "./CardInfo/CardInfo";
-import SearchLocation from "./SearchLocation/SearchLocation";
 import SearchBar from "./SearchBar/SearchBar";
-import unirest from "unirest";
 import unsplash from "../api/unsplash";
 import ImageList from "./ImageList/ImageList";
+import herePlaces from "../api/herePlaces";
+import unirestNearbyApi from "../api/unirestNearby";
+import Axios from "axios";
 
 class App extends React.Component {
   state = { lat: null, images: [], city: [] };
   componentDidMount() {}
   searchByCity = async term => {
-    console.log("term", term);
-    unirest
-      .get(
-        "https://andruxnet-world-cities-v1.p.rapidapi.com/?query=paris&searchby=city"
-      )
-      .header("X-RapidAPI-Host", "andruxnet-world-cities-v1.p.rapidapi.com")
-      .header(
-        "X-RapidAPI-Key",
-        "951dd8fe7bmsh901d416187df458p18dbc5jsncd62ce4a5f58"
-      )
-      .then(response => {
-        this.setState({ city: response });
-      });
+    console.log('termin city', term.input)
+    unirestNearbyApi.get('')
+    .then(response => {
+      console.log('response', response)
+    })
+  };
+  autoSuggestSearch = async term => {
+    console.log('termin city', term.input)
+    herePlaces.get('')
+    .then(response => {
+      console.log('response', response)
+    })
   };
   componentDidUpdate() {
     return <section location={this.state.lat}> Latitude:</section>;
@@ -58,9 +56,14 @@ class App extends React.Component {
               <Hero />
               <div className="container">
                 <SearchBar onSubmit={this.onSearchSubmit} />
-                <div className="container"> Images Found: {this.state.images.length}</div>
+                <div className="container">
+                  Images Found: {this.state.images.length}
+                </div>
                 <ImageList images={this.state.images}> </ImageList>
-                <div className="container" onChange={this.searchByCity} />
+                <input
+                  className="input is-large"
+                  onChange={this.searchByCity}
+                />
                 <div className="container"> {this.state.city}</div>
               </div>
             </section>
