@@ -1,4 +1,4 @@
-import logo from '../../logo.svg';
+
 import React, { Component } from 'react';
 class Header extends Component {
   render() {
