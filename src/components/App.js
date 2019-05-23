@@ -7,25 +7,30 @@ import Hero from "./Hero/Hero";
 import SearchBar from "./SearchBar/SearchBar";
 import unsplash from "../api/unsplash";
 import ImageList from "./ImageList/ImageList";
-import herePlaces from "../api/herePlaces";
+import geoLocationSearch from "../api/exploreNearbyGeo";
 import unirestNearbyApi from "../api/unirestNearby";
+import StringByLatApi from "../api/stringToLatitude";
 import Axios from "axios";
 
 class App extends React.Component {
   state = { lat: null, images: [], city: [] };
   componentDidMount() {}
   searchByCity = async term => {
-    console.log('termin city', term.input)
     unirestNearbyApi.get('')
     .then(response => {
       console.log('response', response)
     })
   };
-  autoSuggestSearch = async term => {
-    console.log('termin city', term.input)
-    herePlaces.get('')
+  cityNameToLatitude = async term => {
+    StringByLatApi.get('')
     .then(response => {
-      console.log('response', response)
+      console.log('response>>>', response.data.Results)
+    })
+  }
+  autoSuggestSearch = async term => {
+    geoLocationSearch.get('')
+    .then(response => {
+      console.log('response', response.data.results.items)
     })
   };
   componentDidUpdate() {
@@ -62,7 +67,7 @@ class App extends React.Component {
                 <ImageList images={this.state.images}> </ImageList>
                 <input
                   className="input is-large"
-                  onChange={this.searchByCity}
+                  onChange={this.cityNameToLatitude}
                 />
                 <div className="container"> {this.state.city}</div>
               </div>
