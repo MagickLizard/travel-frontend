@@ -1,6 +1,6 @@
 
 import axios from 'axios';
-
+//NOT USING THIS ANYMORE AS COSTS MONEY
 export default axios.create({
     baseURL: "https://andruxnet-world-cities-v1.p.rapidapi.com/?query=paris&searchby=city",
     headers: {
