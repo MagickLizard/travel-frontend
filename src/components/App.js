@@ -31,7 +31,7 @@ class App extends React.Component {
           locationsInCity={this.state.locationsInCity}
         />
         <p className="container">
-          Airports Found nearby you: {this.state.locationsInCity.length}
+          Airports Found nearby you: {this.state.geoData.length}
         </p>
       </div>
     );
@@ -58,16 +58,21 @@ class App extends React.Component {
       })
       .then(response => {
         this.searchForNearbyAirport();
-        const GeolocationValues =
-          "geo:" +
-          response.data.Results[0].lat +
-          "," +
-          response.data.Results[0].lon +
-          ";cgen=gps";
-        this.autoSuggestSearch(GeolocationValues);
         this.setState({ geoData: response.data.Results });
         this.setState({ loading: false });
-      });
+      })
+      .then(response => {
+        const GeolocationValues =
+        "geo:" +
+        this.state.geoData[0].lat +
+        "," +
+        this.state.geoData[0].lon +
+        ";cgen=gps";
+        this.autoSuggestSearch(GeolocationValues);
+      })
+      .catch(err => {
+        console.log("err in api request's >>>", err);
+      })
   };
   componentDidMount() {
     this.getUserLocation();
@@ -105,7 +110,10 @@ class App extends React.Component {
       })
       .then(response => {
         this.setState({ airportsNearUser: response.data });
-      });
+      })
+      .catch(err => {
+        console.log("err", err);
+      })
   };
 
   render() {
