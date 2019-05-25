@@ -27,7 +27,6 @@ class App extends React.Component {
   componentDidMount() {}
   cityNameToLatitude = async term => {
     this.setState({ loading: true });
-    console.log("this ", term);
     stringByLatApi
       .get("", {
         params: {
