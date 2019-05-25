@@ -2,14 +2,12 @@ import React from "react";
 
 import "./App.css";
 import Header from "./Header/Header";
-import SearchBarImages from "./SearchBarImages/SearchBarImages";
-import unsplash from "../api/unsplash";
-import ImageList from "./ImageList/ImageList";
+// import SearchBarImages from "./SearchBarImages/SearchBarImages";
+// import ImageList from "./ImageList/ImageList";
+// import unsplash from "../api/unsplash";
 import geoLocationSearch from "../api/exploreNearbyGeo";
-import unirestNearbyApi from "../api/unirestNearby";
 import stringByLatApi from "../api/stringToLatitude";
 import SearchBar from "./SearchBar/SearchBar";
-import Axios from "axios";
 import ListOfPlaces from "./ListOfPlaces/ListOfPlaces";
 
 class App extends React.Component {
@@ -24,7 +22,6 @@ class App extends React.Component {
     places: "",
     loading: ""
   }; //Always make sure the state from the child and parent are matching otherwise error
-  componentDidMount() {}
   cityNameToLatitude = async term => {
     this.setState({ loading: true });
     stringByLatApi
@@ -54,35 +51,40 @@ class App extends React.Component {
       });
   };
 
-  getUserLocation() {
-    let navResponse = navigator.geolocation.getCurrentPosition(
+  getUserLocation = () => {
+    let navResponse = window.navigator.geolocation.getCurrentPosition(
       position => console.log("position", position),
       err => console.log("err", err)
     );
-    this.setState = { location: navResponse };
+    this.setState ({ location: navResponse });
   }
-  onSearchSubmit = async term => {
-    let searchPath = "search/photos";
-    unsplash
-      .get(searchPath, {
-        params: {
-          query: term
-        }
-      })
-      .then(response => {
-        this.setState({ images: response.data.results });
-      });
-  };
+  componentDidMount () {
+    this.getUserLocation();
+  }
+
+  // onSearchSubmit = async term => {
+  //   let searchPath = "search/photos";
+  //   unsplash
+  //     .get(searchPath, {
+  //       params: {
+  //         query: term
+  //       }
+  //     })
+  //     .then(response => {
+  //       this.setState({ images: response.data.results });
+  //     });
+  // };
   render() {
     return (
       <div>
         <section className="hero background-home is-fullheight-with-navbar backgroundHero">
           <div className="container">
-            <Header> </Header>
+            <Header/>
             <section>
               <section className="hero">
                 <div className="hero-body">
                   <div className="container">
+                    <p> Location:  </p>
                     <h1 className="title">Where are you heading? </h1>
                     <h2 className="subtitle">Search by city..</h2>
                   </div>
