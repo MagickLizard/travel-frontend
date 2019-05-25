@@ -54,7 +54,6 @@ class App extends React.Component {
    );
  }
   autoSuggestSearch = async GeolocationValues => {
-    console.log("GeolocationValues autoSuggestSearch", GeolocationValues);
     geoLocationSearch
       .get("", {
         headers: {
@@ -76,7 +75,6 @@ class App extends React.Component {
     })
     .then(response => {
       this.setState({airportsNearUser: response.data});
-      console.log('response', response.data)
     })
   }
 
