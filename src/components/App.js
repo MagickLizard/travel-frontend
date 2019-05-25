@@ -2,17 +2,46 @@ import React from "react";
 
 import "./App.css";
 import Header from "./Header/Header";
-// import SearchBarImages from "./SearchBarImages/SearchBarImages";
-// import ImageList from "./ImageList/ImageList";
-// import unsplash from "../api/unsplash";
+import SearchBarImages from "./SearchBarImages/SearchBarImages";
+import ImageList from "./ImageList/ImageList";
+import unsplash from "../api/unsplash";
 import geoLocationSearch from "../api/exploreNearbyGeo";
 import stringByLatApi from "../api/stringToLatitude";
 import SearchBar from "./SearchBar/SearchBar";
 import ListOfPlaces from "./ListOfPlaces/ListOfPlaces";
-import searchAiports from '../api/nearbyAirportToUser';
-import Airports from './Airports/Airports'
+import searchAiports from "../api/nearbyAirportToUser";
+import Airports from "./Airports/Airports";
+import { BrowserRouter, Route } from "react-router-dom";
+
+
 
 class App extends React.Component {
+  pagePlace = () => {
+    return (
+      <div className="container test">
+        <br />
+        <br />
+        <ListOfPlaces locationsInCity={this.state.locationsInCity} />
+        <div className="container"> {this.state.city}</div>
+      </div>
+    );
+  };
+  pageAirport = () => {
+    return (
+      <div>
+        <Airports
+          airportsNearUser={this.state.airportsNearUser}
+          locationsInCity={this.state.locationsInCity}
+        />
+        <p className="container">
+          Places Found: {this.state.locationsInCity.length}
+        </p>
+      </div>
+    );
+  };
+   pageImagesUnRelated = () => {
+    return <div> airport </div>;
+  };
   state = {
     lat: "",
     images: [],
@@ -35,24 +64,31 @@ class App extends React.Component {
       })
       .then(response => {
         this.searchForNearbyAirport();
-        const GeolocationValues = 'geo:'+ response.data.Results[0].lat + ',' + response.data.Results[0].lon + ';cgen=gps';
+        const GeolocationValues =
+          "geo:" +
+          response.data.Results[0].lat +
+          "," +
+          response.data.Results[0].lon +
+          ";cgen=gps";
         this.autoSuggestSearch(GeolocationValues);
         this.setState({ geoData: response.data.Results });
         this.setState({ loading: false });
       });
   };
-  componentDidMount () {
+  componentDidMount() {
     this.getUserLocation();
   }
   getUserLocation = () => {
     window.navigator.geolocation.getCurrentPosition(
-     position => {
-       console.log('position in userLocation', position)
-       this.setState ({ location: position })
-     },
-     err => {console.log("err", err) }
-   );
- }
+      position => {
+        console.log("position in userLocation", position);
+        this.setState({ location: position });
+      },
+      err => {
+        console.log("err", err);
+      }
+    );
+  };
   autoSuggestSearch = async GeolocationValues => {
     geoLocationSearch
       .get("", {
@@ -62,45 +98,46 @@ class App extends React.Component {
       })
       .then(response => {
         this.setState({ locationsInCity: response.data.results.items });
-        this.setState({ loading: false });;
+        this.setState({ loading: false });
       });
   };
 
   searchForNearbyAirport = async () => {
-    searchAiports.get("", {
-      params: {
-        lng: this.state.location.coords.longitude,
-        lat: this.state.location.coords.latitude
-      }
-    })
-    .then(response => {
-      this.setState({airportsNearUser: response.data});
-    })
-  }
+    searchAiports
+      .get("", {
+        params: {
+          lng: this.state.location.coords.longitude,
+          lat: this.state.location.coords.latitude
+        }
+      })
+      .then(response => {
+        this.setState({ airportsNearUser: response.data });
+      });
+  };
 
-  // onSearchSubmit = async term => {
-  //   let searchPath = "search/photos";
-  //   unsplash
-  //     .get(searchPath, {
-  //       params: {
-  //         query: term
-  //       }
-  //     })
-  //     .then(response => {
-  //       this.setState({ images: response.data.results });
-  //     });
-  // };
+  onSearchSubmit = async term => {
+    let searchPath = "search/photos";
+    unsplash
+      .get(searchPath, {
+        params: {
+          query: term
+        }
+      })
+      .then(response => {
+        this.setState({ images: response.data.results });
+      });
+  };
   render() {
     return (
       <div>
         <section className="hero background-home is-fullheight-with-navbar backgroundHero">
           <div className="container">
-            <Header/>
+            <Header />
             <section>
               <section className="hero">
                 <div className="hero-body">
                   <div className="container">
-                    <p> Location:  </p>
+                    <p> Location: </p>
                     <h1 className="title">Where are you heading? </h1>
                     <h2 className="subtitle">Search by city..</h2>
                   </div>
@@ -113,16 +150,13 @@ class App extends React.Component {
                   onSubmit={this.cityNameToLatitude}
                   loading={this.state.loading}
                 />
-                <Airports airportsNearUser={this.state.airportsNearUser} locationsInCity={this.state.locationsInCity}> </Airports>
-                <p className="container">
-                  Places Found: {this.state.locationsInCity.length}
-                </p>
-                <div>
+                <BrowserRouter>
+                <div className='container'>
+                <Route path="/" exact component={this.pageAirport}/>
+                <Route path="/places" component={this.pagePlace}/>
                 </div>
-                <ListOfPlaces locationsInCity={this.state.locationsInCity}>
-                </ListOfPlaces>
-  
-                <div className="container"> {this.state.city}</div>
+                </BrowserRouter>
+
               </div>
             </section>
           </div>

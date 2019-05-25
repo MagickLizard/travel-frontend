@@ -6,11 +6,14 @@ class Header extends Component {
       <header>
         <nav className='navbar is-primary' role='navigation' aria-label='main navigation'>
           <div className='navbar-brand'>
-            <a className='navbar-item' href='/home'>
-            Explorer lizard
+            <a className='navbar-item' href='/'>
+            Explorer
             </a>
             <a className='navbar-item' href='/'>
             Home
+            </a>
+            <a className='navbar-item' href='/places'>
+            Places
             </a>
             <a
               role='button'
