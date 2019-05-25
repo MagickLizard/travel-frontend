@@ -21,6 +21,7 @@ class SearchBar extends Component {
             className="input is-large is-loading"
             placeholder="Search by a town"
           />
+  
         </div>
       </form>
     );

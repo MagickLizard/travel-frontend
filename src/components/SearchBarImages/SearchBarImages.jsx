@@ -30,7 +30,7 @@ class SearchBarImages extends Component {
                 onChange={event => this.setState({ term: event.target.value })}
                 className="input is-large"
                 type="text"
-                placeholder="Search by a town"
+                placeholder="Search by images"
               />
               <div className="container"> 
               <button

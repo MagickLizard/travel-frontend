@@ -1,32 +1,29 @@
 import React from "react";
 
 import "./App.css";
-import Header from "./Header/Header";
-import SearchBarImages from "./SearchBarImages/SearchBarImages";
-import ImageList from "./ImageList/ImageList";
-import unsplash from "../api/unsplash";
 import geoLocationSearch from "../api/exploreNearbyGeo";
 import stringByLatApi from "../api/stringToLatitude";
 import SearchBar from "./SearchBar/SearchBar";
 import ListOfPlaces from "./ListOfPlaces/ListOfPlaces";
 import searchAiports from "../api/nearbyAirportToUser";
 import Airports from "./Airports/Airports";
-import { BrowserRouter, Route } from "react-router-dom";
-
-
+import Images from './Images/Images';
+import Header from './Header/Header';
+import { Route, BrowserRouter as Router } from "react-router-dom";
 
 class App extends React.Component {
-  pagePlace = () => {
+  pagePlace = () => { //TODO: problem with components reloading because of routes..
     return (
-      <div className="container test">
+      <div className="container">
         <br />
         <br />
         <ListOfPlaces locationsInCity={this.state.locationsInCity} />
-        <div className="container"> {this.state.city}</div>
+        <div className="container"> </div>
+        Places Found: {this.state.locationsInCity.length}
       </div>
     );
   };
-  pageAirport = () => {
+  pageHome = () => {
     return (
       <div>
         <Airports
@@ -34,13 +31,10 @@ class App extends React.Component {
           locationsInCity={this.state.locationsInCity}
         />
         <p className="container">
-          Places Found: {this.state.locationsInCity.length}
+          Airports Found nearby you: {this.state.locationsInCity.length}
         </p>
       </div>
     );
-  };
-   pageImagesUnRelated = () => {
-    return <div> airport </div>;
   };
   state = {
     lat: "",
@@ -81,7 +75,6 @@ class App extends React.Component {
   getUserLocation = () => {
     window.navigator.geolocation.getCurrentPosition(
       position => {
-        console.log("position in userLocation", position);
         this.setState({ location: position });
       },
       err => {
@@ -115,18 +108,6 @@ class App extends React.Component {
       });
   };
 
-  onSearchSubmit = async term => {
-    let searchPath = "search/photos";
-    unsplash
-      .get(searchPath, {
-        params: {
-          query: term
-        }
-      })
-      .then(response => {
-        this.setState({ images: response.data.results });
-      });
-  };
   render() {
     return (
       <div>
@@ -137,26 +118,26 @@ class App extends React.Component {
               <section className="hero">
                 <div className="hero-body">
                   <div className="container">
-                    <p> Location: </p>
                     <h1 className="title">Where are you heading? </h1>
                     <h2 className="subtitle">Search by city..</h2>
                   </div>
                 </div>
               </section>
               <div className="container">
-                <br />
-                <br />
                 <SearchBar
                   onSubmit={this.cityNameToLatitude}
                   loading={this.state.loading}
                 />
-                <BrowserRouter>
+                <Router> 
                 <div className='container'>
-                <Route path="/" exact component={this.pageAirport}/>
+                <Route path="/" exact component={this.pageHome}>
+                </Route>
                 <Route path="/places" component={this.pagePlace}/>
+                <Route path="/images" component={Images}/>
                 </div>
-                </BrowserRouter>
-
+                </Router>
+                <br />
+                <br />
               </div>
             </section>
           </div>

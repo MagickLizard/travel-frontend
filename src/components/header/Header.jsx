@@ -9,11 +9,11 @@ class Header extends Component {
             <a className='navbar-item' href='/'>
             Explorer
             </a>
-            <a className='navbar-item' href='/'>
-            Home
-            </a>
             <a className='navbar-item' href='/places'>
             Places
+            </a>
+            <a className='navbar-item' href='/images'>
+            Practice image api
             </a>
             <a
               role='button'
