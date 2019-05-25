@@ -9,6 +9,8 @@ import geoLocationSearch from "../api/exploreNearbyGeo";
 import stringByLatApi from "../api/stringToLatitude";
 import SearchBar from "./SearchBar/SearchBar";
 import ListOfPlaces from "./ListOfPlaces/ListOfPlaces";
+import searchAiports from '../api/nearbyAirportToUser';
+import Airports from './Airports/Airports'
 
 class App extends React.Component {
   state = {
@@ -20,7 +22,8 @@ class App extends React.Component {
     locationsInCity: [],
     location: "",
     places: "",
-    loading: ""
+    loading: "",
+    airportsNearUser: []
   }; //Always make sure the state from the child and parent are matching otherwise error
   cityNameToLatitude = async term => {
     this.setState({ loading: true });
@@ -31,12 +34,25 @@ class App extends React.Component {
         }
       })
       .then(response => {
+        this.searchForNearbyAirport();
         const GeolocationValues = 'geo:'+ response.data.Results[0].lat + ',' + response.data.Results[0].lon + ';cgen=gps';
         this.autoSuggestSearch(GeolocationValues);
         this.setState({ geoData: response.data.Results });
         this.setState({ loading: false });
       });
   };
+  componentDidMount () {
+    this.getUserLocation();
+  }
+  getUserLocation = () => {
+    window.navigator.geolocation.getCurrentPosition(
+     position => {
+       console.log('position in userLocation', position)
+       this.setState ({ location: position })
+     },
+     err => {console.log("err", err) }
+   );
+ }
   autoSuggestSearch = async GeolocationValues => {
     console.log("GeolocationValues autoSuggestSearch", GeolocationValues);
     geoLocationSearch
@@ -47,19 +63,21 @@ class App extends React.Component {
       })
       .then(response => {
         this.setState({ locationsInCity: response.data.results.items });
-        this.setState({ loading: false });
+        this.setState({ loading: false });;
       });
   };
 
-  getUserLocation = () => {
-    let navResponse = window.navigator.geolocation.getCurrentPosition(
-      position => console.log("position", position),
-      err => console.log("err", err)
-    );
-    this.setState ({ location: navResponse });
-  }
-  componentDidMount () {
-    this.getUserLocation();
+  searchForNearbyAirport = async () => {
+    searchAiports.get("", {
+      params: {
+        lng: this.state.location.coords.longitude,
+        lat: this.state.location.coords.latitude
+      }
+    })
+    .then(response => {
+      this.setState({airportsNearUser: response.data});
+      console.log('response', response.data)
+    })
   }
 
   // onSearchSubmit = async term => {
@@ -97,12 +115,15 @@ class App extends React.Component {
                   onSubmit={this.cityNameToLatitude}
                   loading={this.state.loading}
                 />
+                <Airports airportsNearUser={this.state.airportsNearUser} locationsInCity={this.state.locationsInCity}> </Airports>
                 <p className="container">
                   Places Found: {this.state.locationsInCity.length}
                 </p>
+                <div>
+                </div>
                 <ListOfPlaces locationsInCity={this.state.locationsInCity}>
                 </ListOfPlaces>
-
+  
                 <div className="container"> {this.state.city}</div>
               </div>
             </section>

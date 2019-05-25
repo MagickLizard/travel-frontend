@@ -1,5 +1,4 @@
 import axios from 'axios';
-const geoLocation = 'geo:41.8369,-87.6847;cgen=gps';
 const query = 'vet';
 
 export default axios.create({
