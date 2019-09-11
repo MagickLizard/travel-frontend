@@ -7,6 +7,7 @@ export default axios.create({
     Accept: 'application/json',
   },
   params: {
-
+    app_id: 'mzrjl5QolxywuUwjbvcz',
+    app_code: '2xOQivTeB8u3A0H1aVeT8Q'
   }
 });

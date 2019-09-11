@@ -7,11 +7,21 @@ import SearchBar from "./SearchBar/SearchBar";
 import ListOfPlaces from "./ListOfPlaces/ListOfPlaces";
 import searchAiports from "../api/nearbyAirportToUser";
 import Airports from "./Airports/Airports";
-import Images from './Images/Images';
-import Header from './Header/Header';
+import Navigation from './Navigation/Navigation';
+import Hero from './Hero/Hero'
 import { Route, BrowserRouter as Router } from "react-router-dom";
 
 class App extends React.Component {
+  state = {
+    city: [],
+    geoData: [],
+    searchTerm: "",
+    locationsInCity: [],
+    location: "",
+    places: "",
+    loading: "",
+    airportsNearUser: []
+  }; //Always make sure the state from the child and parent are matching otherwise error
   pagePlace = () => { //TODO: problem with components reloading because of routes..
     return (
       <div className="container">
@@ -36,18 +46,7 @@ class App extends React.Component {
       </div>
     );
   };
-  state = {
-    lat: "",
-    images: [],
-    city: [],
-    geoData: [],
-    searchTerm: "",
-    locationsInCity: [],
-    location: "",
-    places: "",
-    loading: "",
-    airportsNearUser: []
-  }; //Always make sure the state from the child and parent are matching otherwise error
+
   cityNameToLatitude = async term => {
     this.setState({ loading: true });
     stringByLatApi
@@ -58,10 +57,7 @@ class App extends React.Component {
       })
       .then(response => {
         this.searchForNearbyAirport();
-        this.setState({ geoData: response.data.Results });
-        this.setState({ loading: false });
-      })
-      .then(response => {
+        this.setState({ geoData: response.data.Results, loading: false });     
         const GeolocationValues =
         "geo:" +
         this.state.geoData[0].lat +
@@ -95,8 +91,7 @@ class App extends React.Component {
         }
       })
       .then(response => {
-        this.setState({ locationsInCity: response.data.results.items });
-        this.setState({ loading: false });
+        this.setState({ locationsInCity: response.data.results.items, loading: false  });
       });
   };
 
@@ -121,16 +116,9 @@ class App extends React.Component {
       <div>
         <section className="hero background-home is-fullheight-with-navbar backgroundHero">
           <div className="container">
-            <Header />
+            <Navigation />
+            <Hero/>
             <section>
-              <section className="hero">
-                <div className="hero-body">
-                  <div className="container">
-                    <h1 className="title">Where are you heading? </h1>
-                    <h2 className="subtitle">Search by city..</h2>
-                  </div>
-                </div>
-              </section>
               <div className="container">
                 <SearchBar
                   onSubmit={this.cityNameToLatitude}
@@ -141,7 +129,6 @@ class App extends React.Component {
                 <Route path="/" exact component={this.pageHome}>
                 </Route>
                 <Route path="/places" component={this.pagePlace}/>
-                <Route path="/images" component={Images}/>
                 </div>
                 </Router>
                 <br />
