@@ -7,13 +7,10 @@ class Navigation extends Component {
         <nav className='navbar is-primary' role='navigation' aria-label='main navigation'>
           <div className='navbar-brand'>
             <a className='navbar-item' href='/'>
-            Explorer
+            Flights
             </a>
             <a className='navbar-item' href='/places'>
             Places
-            </a>
-            <a className='navbar-item' href='/images'>
-            Practice image api
             </a>
             <a
               role='button'

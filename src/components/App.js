@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./App.css";
+import "./App.scss";
 import geoLocationSearch from "../api/exploreNearbyGeo";
 import stringByLatApi from "../api/stringToLatitude";
 import SearchBar from "./SearchBar/SearchBar";
@@ -10,23 +10,41 @@ import Airports from "./Airports/Airports";
 import Navigation from './Navigation/Navigation';
 import Hero from './Hero/Hero'
 import { Route, BrowserRouter as Router } from "react-router-dom";
+import styled from 'styled-components';
+import background from '../img/background3small.jpg';
+
+const Gradient = styled.section`
+	position: relative;
+  width: 100%;
+
+	h1 {
+		font-size: 40px;
+		-webkit-transition: .5s .1s;
+		-webkit-background-clip: text;
+		cursor: pointer;
+		
+		&:hover {
+      color: transparent;
+      transition-duration: 5s;
+      transition-timing-function: linear;
+      animation: smooth;
+      animation-delay: 10s;
+		}
+
+}
+`;
 
 class App extends React.Component {
   state = {
-    city: [],
     geoData: [],
-    searchTerm: "",
     locationsInCity: [],
     location: "",
-    places: "",
     loading: "",
     airportsNearUser: []
-  }; //Always make sure the state from the child and parent are matching otherwise error
-  pagePlace = () => { //TODO: problem with components reloading because of routes..
+  };
+  pagePlace = () => {
     return (
       <div className="container">
-        <br />
-        <br />
         <ListOfPlaces locationsInCity={this.state.locationsInCity} />
         <div className="container"> </div>
         Places Found: {this.state.locationsInCity.length}
@@ -114,7 +132,13 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <section className="hero background-home is-fullheight-with-navbar backgroundHero">
+      <Gradient className="hero is-primary is-fullheight has-background"> 
+            <img
+              className="img hero-background is-transparent"
+              src={background}
+              alt="background of lava"
+            />
+        <section>
           <div className="container">
             <Navigation />
             <Hero/>
@@ -131,12 +155,11 @@ class App extends React.Component {
                 <Route path="/places" component={this.pagePlace}/>
                 </div>
                 </Router>
-                <br />
-                <br />
               </div>
             </section>
           </div>
         </section>
+        </Gradient>
       </div>
     );
   }

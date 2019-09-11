@@ -1,0 +1,70 @@
+@charset "utf-8";
+@import url('https://fonts.googleapis.com/css?family=Montserrat:300');
+.html {
+  background-color: #B97AEC;
+}
+$brown: #FFF6FF; // text color
+$beige-light: rgb(233, 232, 227);
+$ca-palette-paper: #f2edde;
+
+// Text colours
+$text-color:#3e4543;
+
+.title, h1,h2 {
+  font-family: 'Montserrat', sans-serif, arial;
+  font-weight: 900;
+}
+//titles
+$card-color: $ca-palette-paper;
+$title-color: #9672C6;
+$subtitle-color: #fffdf5;
+//other
+$grey-dark: $brown;
+$grey-light: $beige-light;
+$title-weight: 550;
+$body-background-color: #fde2f6;
+$background: #FCEAFF;
+$secondColour: rgb(186, 137, 247);
+$light: #FFF6FF;
+//sizes
+$size-1: 3rem;
+$body-font-size: 0.9em;
+
+//heros 
+$info: #FCEAFF;
+$primary: rgb(94, 170, 241);
+$danger: #FFA2BC;
+$warning: rgb(244, 213, 248);
+$success-invert: #6e6e6e;
+$info-invert: #6e6e6e;
+$warning-invert: #6e6e6e;
+$success: rgb(253, 215, 244);
+
+//links
+$link-hover-background: #FFA2BC;
+$link: $background; //ALL Links
+
+// navbar
+$navbar-dropdown-background-color:rgb(250, 148, 177);
+$navbar-dropdown-item-hover-color: rgb(244, 213, 248); //dropdown item text
+$navbar-item-hover-background-color: #FFA2BC;
+
+
+// icon
+$icon-dimensions-large: 5rem;
+$icon-dimensions-medium: 3rem;
+
+$radius: 0px;
+// $radius-small: 10px;
+$easing: ease-in;
+$tabs-link-hover-color: #4B4453 !important;
+
+$tabs-boxed-link-radius: 20px;
+$tabs-toggle-link-radius: 20px;
+.heroTitle {
+  color: #9672C6 !important;
+}
+
+
+
+@import "../../node_modules/bulma/bulma.sass";

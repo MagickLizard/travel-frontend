@@ -1,6 +1,5 @@
 import React from "react";
 
-import "./placesCard.css";
 class PlacesCard extends React.Component {
   state = {
     placesCard: "",
@@ -43,7 +42,7 @@ class PlacesCard extends React.Component {
           <div className="media">
             <div className="media-left">
               <figure className="image is-small">
-                <img src={this.props.place.icon} alt="Placeholder image" />
+                <img src={this.props.place.icon} alt="Placeholder icon" />
               </figure>
             </div>
             <div className="content">
