@@ -1,3 +1,5 @@
+This is a MVP for building a travel itinerary. Plus some react learning which I need to move somewhere else. :D
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
