@@ -1,22 +1,24 @@
-import React from "react";
+import React from 'react'
 
 class AirportDropdown extends React.Component {
-  state = {airport: ''}
-  addLocation = (event) => {
-    console.log('event>>',event)
-    console.log('>>',this.props.airportItems.name)
-    // this.props.propertyAction(this.props.items)
+  state = { airport: '' }
+  addLocation = () => {
+    console.log('>>', this.props.airportItems.name)
   }
-  render() {
-    console.log('>>',this.state)
-    
+  render () {
+    console.log('>>', this.state)
+
     return (
-      <div className="container">
-      <button className='' href=''onClick={this.addLocation}>
-        <span className="tag is-dark">{this.props.airportItems.name}</span>
-        </button>
+      <div className='section'>
+        <div
+          className='buttons field is-grouped'
+          href=''
+          onClick={this.addLocation}
+        >
+          <span className='button is-primary is-inverted is-outlined'>{this.props.airportItems.name}</span>
+        </div>
       </div>
-    );
+    )
   }
 }
-export default AirportDropdown;
+export default AirportDropdown
