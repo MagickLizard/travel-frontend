@@ -1,5 +1,7 @@
 import React from 'react'
-
+import Hero from './hero/Hero'
+import Missions from './Travel/Missions'
+import Footer from './footer/Footer'
 import './App.scss'
 import geoLocationSearch from '../api/exploreNearbyGeo'
 import stringByLatApi from '../api/stringToLatitude'
@@ -7,32 +9,29 @@ import SearchBar from './SearchBar/SearchBar'
 import ListOfPlaces from './Places/ListOfPlaces/ListOfPlaces'
 import searchAiports from '../api/nearbyAirportToUser'
 import Airports from './Airports/Airports'
-import Navigation from './Navigation/Navigation'
-import Hero from './Hero/Hero'
 import { Route, BrowserRouter as Router } from 'react-router-dom'
 import styled from 'styled-components'
-import background from '../img/background3small.jpg'
+import background from '../img/background.jpg'
 
 const Gradient = styled.section`
-  position: relative;
-  width: 100%;
+position: relative;
+width: 100%;
 
-  h1 {
-    font-size: 40px;
-    -webkit-transition: 0.5s 0.1s;
-    -webkit-background-clip: text;
-    cursor: pointer;
+h1 {
+  font-size: 40px;
+  -webkit-transition: 0.5s 0.1s;
+  -webkit-background-clip: text;
+  cursor: pointer;
 
-    &:hover {
-      color: transparent;
-      transition-duration: 5s;
-      transition-timing-function: linear;
-      animation: smooth;
-      animation-delay: 10s;
-    }
+  &:hover {
+    color: transparent;
+    transition-duration: 5s;
+    transition-timing-function: linear;
+    animation: smooth;
+    animation-delay: 10s;
   }
+}
 `
-
 class App extends React.Component {
   state = {
     geoData: [],
@@ -152,37 +151,12 @@ class App extends React.Component {
         console.log('err', err)
       })
   }
-
   render () {
     return (
-      <div>
-        <Gradient className='hero is-primary is-fullheight has-background'>
-          <img
-            className='img hero-background is-transparent'
-            src={background}
-            alt='background of lava'
-          />
-          <section>
-            <div className='container'>
-              <Navigation />
-              <Hero />
-              <section>
-                <div className='container'>
-                  <SearchBar
-                    onSubmit={this.cityNameToLatitude}
-                    loading={this.state.loading}
-                  />
-                  <Router>
-                    <div className='container'>
-                      <Route path='/' exact component={this.pageHome} />
-                      <Route path='/places' component={this.pagePlace} />
-                    </div>
-                  </Router>
-                </div>
-              </section>
-            </div>
-          </section>
-        </Gradient>
+      <div className='App'>
+        <Hero />
+        <Missions />
+        <Footer />
       </div>
     )
   }

@@ -32,6 +32,8 @@ class Places extends React.Component {
         }
       })
       .then((response) => {
+        console.log('response PLACES>>', response)
+
         this.setState({ geoData: response.data.Results, loading: false })
         const GeolocationValues =
         'geo:' +
@@ -74,15 +76,17 @@ class Places extends React.Component {
       })
   }
 
-  searchForNearbyAirport = async () => {
+  searchByAiportNearDestination = async () => {
     searchAiports
       .get('', {
         params: {
-          lng: this.state.location.coords.longitude,
-          lat: this.state.location.coords.latitude
+          lng: this.state.long,
+          lat: this.state.lat
         }
       })
       .then((response) => {
+        console.log('response2 DESTINATION AIRPORT>>', response)
+
         this.setState({ airportsNearUser: response.data })
       })
       .catch((err) => {
